@@ -31,20 +31,7 @@ export class LicenseManager {
     }
 
     public validateLicense(): void {
-        const licenseDetails = this.getLicenseDetails(LicenseManager.licenseKey);
-        if (licenseDetails.missing) {
-            if (!this.isWebsiteUrl() || this.isForceWatermark()) {
-                this.outputMissingLicenseKey();
-            }
-        } else if (!licenseDetails.valid) {
-            this.outputInvalidLicenseKey(licenseDetails.incorrectLicenseType, licenseDetails.licenseType);
-        } else if (licenseDetails.isTrial && licenseDetails.trialExpired) {
-            this.outputExpiredTrialKey(licenseDetails.expiry);
-        } else if (licenseDetails.expired) {
-            const gridReleaseDate = LicenseManager.getGridReleaseDate();
-            const formattedReleaseDate = LicenseManager.formatDate(gridReleaseDate);
-            this.outputIncompatibleVersion(licenseDetails.expiry, formattedReleaseDate);
-        }
+        
     }
 
     private static extractExpiry(license: string) {
