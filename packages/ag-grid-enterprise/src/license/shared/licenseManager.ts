@@ -29,32 +29,7 @@ export class LicenseManager {
         this.md5.init();
     }
 
-    public validateLicense(): void {
-        const licenseDetails = this.getLicenseDetails(LicenseManager.licenseKey);
-        const currentLicenseName = `AG Grid ${licenseDetails.currentLicenseType === 'BOTH' ? 'and AG Charts ' : ''}Enterprise`;
-        const suppliedLicenseName =
-            licenseDetails.suppliedLicenseType === undefined
-                ? ''
-                : `AG ${licenseDetails.suppliedLicenseType === 'BOTH' ? 'Grid and AG Charts' : licenseDetails.suppliedLicenseType === 'GRID' ? 'Grid' : 'Charts'} Enterprise`;
-
-        if (licenseDetails.missing) {
-            if (!this.isWebsiteUrl() || this.isForceWatermark()) {
-                this.outputMissingLicenseKey(currentLicenseName);
-            }
-        } else if (licenseDetails.expired) {
-            const gridReleaseDate = LicenseManager.getGridReleaseDate();
-            const formattedReleaseDate = LicenseManager.formatDate(gridReleaseDate);
-            this.outputExpiredKey(licenseDetails.expiry, formattedReleaseDate, currentLicenseName, suppliedLicenseName);
-        } else if (!licenseDetails.valid) {
-            this.outputInvalidLicenseKey(
-                !!licenseDetails.incorrectLicenseType,
-                currentLicenseName,
-                suppliedLicenseName
-            );
-        } else if (licenseDetails.isTrial && licenseDetails.trialExpired) {
-            this.outputExpiredTrialKey(licenseDetails.expiry, currentLicenseName, suppliedLicenseName);
-        }
-    }
+    public validateLicense(): void {}
 
     private static extractExpiry(license: string) {
         const restrictionHashed = license.substring(license.lastIndexOf('_') + 1, license.length);
